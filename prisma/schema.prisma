@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  Id_Utilisateur   Int        @id @default(autoincrement())
+  Civilite         String
+  Pseudo           String     
+  Prenom           String     
+  Nom              String     
+  Email            String     @unique
+  Mdp              String    
+  Latitude         Float
+  Longitude        Float
+  Ville            String
+  Botanniste       Boolean    @default(false)
+  //Annonces         Annonce[]
+ // GardesPlantes    GardePlantes             @relation(fields: [Id_Utilisateur], references: [Id_GardePlante])
+}
+
+model Annonce {
+  Id_Annonce       Int              @id @default(autoincrement())
+  Id_Plante        String[]
+  Titre            String
+  Description      String
+  Etat             Boolean          @default(false)
+  DateDebut        DateTime?
+  DateFin          DateTime?
+  DateCreation     DateTime         @default(now())
+  //Conversations    Conversation[]
+  //users            User             @relation(fields: [Id_Annonce], references: [Id_Utilisateur])
+}
+
+// model Entretien{
+//   Id_Entretien
+//   Id_Annonce
+//   photos
+//   Date
+//   Commentaire
+// }
+
+
+
+
+
+//6.2
+
+// model GardePlantes {
+//   Id_GardePlante                Int      @id
+//   UtilisateurProprietaire       Int  
+//   UtilisateurGardien            Int
+//   Annonces                      Int
+//   Photos                        String[]
+// }
+
+// model ConseilsBotanistes {
+//   Id_ConseilBotaniste        Int      @id
+//   Id_UtilisateurBotaniste    Int    
+//   Id_Plante                  Int
+//   ConseilEntretien           String
+//   DateConseil                DateTime @default(now())
+// }
+
+// model Conversation {
+//   Id_Conversation               Int      @id
+//   Id_UtilisateurProprietaire    Int    
+//   Id_UtilisateurGardien         Int
+//   Id_Message                    Message[]
+//   //Annonces                      Annonce             @relation(fields: [Id_Conversation], references: [Id_Annonce])
+// }
+
+// model Message {
+//   Id_Message               Int             @id
+//   MessageProprietaire      String    
+//   MessageGardien           String
+//   DatePropretaire          DateTime        @default(now())
+//   DateGardien              DateTime        @default(now())
+//   Conversation             Conversation    @relation(fields: [Id_Message], references: [Id_Conversation])
+// }
+

@@ -1,0 +1,13 @@
+RGPD
+
+Arosaje il lui faut un DPO. Il va communiquer avec les dev pour la sécurité le traitement des données
+Lui fournir la liste de toutes les informations personnelles qui risquent d'être traitées. Faire un tabelau avec toutes les données qu'on est censé demander aux troi groupes de personnes, ce que l'application va en faire. Qui va les traiter (nous) et comment
+
+Lors de l'inscription il y a une popup qui demande de confirmer de capturer ses infos et il va vérifier le profil avant son inscription finalisé
+
+vérifier la certification des botannistes lors de l'inscription. Pièce à joindre
+
+
+
+faire signer un charte de confidentialité pour les botannistes pour ne pas qu'ils capturent les infos des clients son adresse, photos de famille
+Leur demander leur consentement

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Annonce" ALTER COLUMN "DateDebut" DROP NOT NULL,
+ALTER COLUMN "DateFin" DROP NOT NULL;
