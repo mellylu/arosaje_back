@@ -9,7 +9,7 @@ const annonceController = require('../controllers/annonce.controller')
  *     description: Renvoie la liste des annonces des plantes
  *     responses:
  *       200:
- *         description: getAll annonces
+ *         description: Affichage de toutes les annonces
  *         content:
  *           application/json:
  *             example:
@@ -21,7 +21,9 @@ const annonceController = require('../controllers/annonce.controller')
  *                 DateDebut: 
  *                 DateFin: 
  *                 DateCreation: 2024-02-02T14:35:22.158Z
-
+ *                 Latitude: 49.115469,
+ *                 Longitude:  -1.082814
+ *                 Ville : Saint-Lô
  */
 router.get('/', annonceController.getAll);
 
@@ -56,12 +58,25 @@ router.get('/', annonceController.getAll);
  *                 items:
  *                   type: string
  *                 description: Date à fin de gardiennage de la plante
+ *               Longitude:
+ *                 type: number
+ *                 format: float
+ *                 description: Coordonnées géographique Lng
+ *               Latitude:
+ *                 type: number
+ *                 format: float
+ *                 description: Coordonnées géographique Lat
+ *               Ville:
+ *                 type: string
+ *                 description: Ville correspondant aux données géographiques
  *              
  *     responses:
+ *       200:
+ *         description: les champs n'ont pas correctement été remplis
  *       201:
- *         description: Annonce ajouté avec succès
- *       400:
- *         description: Données de requête invalides
+ *         description: l'annonce a bien été ajoutée
+ *       500:
+ *         description: erreur dans ajout annonce, 
  */
 router.post('/', annonceController.postAnnonce);
 
@@ -80,7 +95,7 @@ router.post('/', annonceController.postAnnonce);
  *         description: ID de l'annonce à récupérer
  *     responses:
  *       200:
- *         description: Les détails de l'utilisateur
+ *         description: affichage d'une annonce
  *         content:
  *           application/json:
  *             example:
@@ -92,8 +107,13 @@ router.post('/', annonceController.postAnnonce);
  *               DateDebut: 
  *               DateFin: 
  *               DateCreation: 2024-02-02T14:35:22.158Z
+ *               Latitude: 49.115469,
+ *               Longitude:  -1.082814
+ *               Ville : Saint-Lô
+ *       500:
+ *         description: message erreur
  *       404:
- *         description: annonce non trouvé
+ *         description: annonce non trouvée
  */
 router.get('/:id', annonceController.getId);
 
@@ -112,11 +132,71 @@ router.get('/:id', annonceController.getId);
  *         description: ID de l'annonce à récupérer
  *     responses:
  *       200:
- *         description: Utilisateur supprimé avec succès
+ *         description: annonce supprimée
+ *       500:
+ *         description: message d'erreur
  *       404:
- *         description: annonce non trouvé
+ *         description: annonce non trouvée
  */
 router.delete('/:id', annonceController.delete);
+
+/**
+ * @swagger
+ * /api/v1/annonces/{id}:
+ *   put:
+ *     summary: update annonce
+ *     description: Mettre à jour les informations d'une annonce spécifique dans la base de données par son ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'annonce à mettre à jour
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               Titre:
+ *                 type: string
+ *                 description: Nom de l'annonce / de la plante
+ *               Description:
+ *                 type: string
+ *                 description: Description de l'annonce / de la plante
+ *               DateDebut:
+ *                 pattern: "^[0-9]{2}/[0-9]{2}/[0-9]{4}$"
+ *                 description: Date de fin de gardiennage de la plante au format "DD/MM/YYYY"
+ *               DateFin:
+ *                 pattern: "^[0-9]{2}/[0-9]{2}/[0-9]{4}$"
+ *                 description: Date de fin de gardiennage de la plante au format "DD/MM/YYYY"
+ *               Id_Plante:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Date à fin de gardiennage de la plante
+ *               Longitude:
+ *                 type: number
+ *                 format: float
+ *                 description: Coordonnées géographique Lng
+ *               Latitude:
+ *                 type: number
+ *                 format: float
+ *                 description: Coordonnées géographique Lat
+ *               Ville:
+ *                 type: string
+ *                 description: Ville correspondant aux données géographiques
+ *     responses:
+ *       200:
+ *         description: Annonce modifiée
+ *       500:
+ *         description: Données de requête invalides
+ *       404:
+ *         description: Annonce non trouvée
+ */
+router.put('/:id', annonceController.update);
 
 
 module.exports = router;

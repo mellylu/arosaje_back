@@ -2,7 +2,6 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 //le tri descendant ascendant par titre et par date de début et les annonces au alentour de ta localisation
-//put des annonces <-- a faire si j'ai le temps, pas prio
 
 //A POSER COMME QUESTION AU PROF AVOIR DETAILS
 //prise en photo de plantes et partage je sais pas ce que ça veut dire
@@ -11,7 +10,6 @@ const prisma = new PrismaClient();
 //ajout table message qui est reliée à l'id de l'annonce
 //faire un get all des message
 //faire un post de message
-
 
 //faire les requêtes cloudinary pour ajouter un element, supprimer une photo etc
 
@@ -37,7 +35,7 @@ exports.getAll = async(req, res) => {
                 annoncesPagination.push(annonces[i])
               }
           }
-          res.send({
+          res.status(200).send({
             content: annoncesPagination
           });
        }
@@ -58,13 +56,9 @@ exports.getAll = async(req, res) => {
       }
 
        
-        res.send({
+        res.status(200).send({
           content: annonces
         });
-       
-
-
-       
         
         
       } catch (err) {
@@ -104,8 +98,7 @@ exports.postAnnonce = async(req, res) => {
                 const annonce = await prisma.annonce.create({
                     data: req.body,
                 });
-                console.log(annonce)
-                res.status(200).send({ ajout_annonce: true, content: annonce });
+                res.status(201).send({ ajout_annonce: true, content: annonce });
         
             }
             catch(err){
@@ -156,8 +149,7 @@ exports.delete = async(req, res) => {
               Id_Annonce: parseInt(req.params.id)
             }})
         res.send({
-          delete: true,
-          annonce:annonces
+          delete: true
         });
       } catch (err) {
         res.status(500).send({
@@ -171,20 +163,30 @@ exports.delete = async(req, res) => {
 
 exports.update = async(req, res) => {
   try {
-      const annonces = await prisma.annonce.update({
+    if (req.body.DateDebut){
+      req.body.DateDebut = convertirDateEnDateTime(req.body.DateDebut)
+    }
+    if(req.body.DateFin){
+      req.body.DateFin = convertirDateEnDateTime(req.body.DateFin)
+    }
+    const annonces = await prisma.annonce.update({
           where: {
             Id_Annonce: parseInt(req.params.id)
           },
-          data: {
+          data: 
+          {
             Titre : req.body.Titre,
             Description : req.body.Description,
-            //DateDebut :,
-            //DateFin : ,
-            //Id_Plante : 
+            DateDebut : req.body.DateDebut,
+            DateFin : req.body.DateFin,
+            Id_Plante : req.body.Id_Plante,
+            Longitude: req.body.Longitude,
+            Latitude: req.body.Latitude,
+            Ville: req.body.Ville
           }
         })
-      res.send({
-        delete: true,
+      res.status(200).send({
+        update: true,
         annonce:annonces
       });
     } catch (err) {
@@ -196,7 +198,6 @@ exports.update = async(req, res) => {
     }
 }
 
-  
 
 
 
