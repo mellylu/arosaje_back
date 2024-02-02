@@ -1,13 +1,72 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+//le tri descendant ascendant par titre et par date de début et les annonces au alentour de ta localisation
+//put des annonces <-- a faire si j'ai le temps, pas prio
+
+//A POSER COMME QUESTION AU PROF AVOIR DETAILS
+//prise en photo de plantes et partage je sais pas ce que ça veut dire
+
+//Ajout et visualisation de conseils concenant l'entretien d'une plante à faire garder
+//ajout table message qui est reliée à l'id de l'annonce
+//faire un get all des message
+//faire un post de message
+
+
+//faire les requêtes cloudinary pour ajouter un element, supprimer une photo etc
 
 exports.getAll = async(req, res) => {
     try {
         const annonces = await prisma.annonce.findMany();
+  
+        //pagination par 5 annonces
+        if (req.query.page != undefined){
+          let annoncesPagination = []
+          let nb = 5
+          let top = false
+          let bottom = false
+          req.query.page = Number(req.query.page) * 5
+          // if (nb + req.query.page >= annonces.length){
+          //      top = true
+          // }
+          // if (req.query.page === 0){
+          //      bottom = true
+          // }
+          for(let i = req.query.page; i < nb + req.query.page; i++){
+              if(i<annonces.length){
+                annoncesPagination.push(annonces[i])
+              }
+          }
+          res.send({
+            content: annoncesPagination
+          });
+       }
+
+
+       if (req.query.lat && req.query.lng){
+        const annoncesByLocalization = []
+        annonces.filter( (element) => {
+            req.query.lat=Number(req.query.lat)
+            req.query.lng=Number(req.query.lng)
+            if(element.localization.lat === req.query.lat && element.localization.lng === req.query.lng)
+            {
+              annoncesByLocalization.push(element)
+            }
+            element.localization.lat === req.body.lat && element.localization.lng === req.body.lng
+        });
+        data = v
+      }
+
+       
         res.send({
           content: annonces
         });
+       
+
+
+       
+        
+        
       } catch (err) {
         res.status(500).send({
           error: 500,
@@ -17,6 +76,9 @@ exports.getAll = async(req, res) => {
         await prisma.$disconnect();
       }
 }
+
+
+
 
 exports.postAnnonce = async(req, res) => {
     // if (req.body.Titre == undefined || req.body.length < 5 || req.body.length > 30){
@@ -140,3 +202,6 @@ exports.update = async(req, res) => {
 
 
 //url secure : https://res.cloudinary.com/melly-lucas/image/upload/v1704971723/Arosaje/annonces/plante_kqt4sg.avif
+
+
+//"https://res.cloudinary.com/melly-lucas/image/upload/v1704971723/Arosaje/annonces/plante_kqt4sg.avif", "https://res.cloudinary.com/melly-lucas/image/upload/v1704971723/Arosaje/annonces/plante2_ppix6p.avif"

@@ -35,6 +35,9 @@ model Annonce {
   DateDebut        DateTime?
   DateFin          DateTime?
   DateCreation     DateTime         @default(now())
+  Latitude         Float
+  Longitude        Float
+  Ville            String
   //Conversations    Conversation[]
   //users            User             @relation(fields: [Id_Annonce], references: [Id_Utilisateur])
 }
