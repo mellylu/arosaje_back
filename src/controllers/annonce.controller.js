@@ -6,10 +6,6 @@ const prisma = new PrismaClient();
 //A POSER COMME QUESTION AU PROF AVOIR DETAILS
 //prise en photo de plantes et partage je sais pas ce que ça veut dire
 
-//Ajout et visualisation de conseils concenant l'entretien d'une plante à faire garder
-//ajout table message qui est reliée à l'id de l'annonce
-//faire un get all des message
-//faire un post de message
 
 //faire les requêtes cloudinary pour ajouter un element, supprimer une photo etc
 
@@ -23,7 +19,7 @@ exports.getAll = async(req, res) => {
           let nb = 5
           let top = false
           let bottom = false
-          req.query.page = Number(req.query.page) * 5
+          req.query.page = Number(req.query.page) * nb
           // if (nb + req.query.page >= annonces.length){
           //      top = true
           // }
@@ -41,24 +37,26 @@ exports.getAll = async(req, res) => {
        }
 
 
-       if (req.query.lat && req.query.lng){
-        const annoncesByLocalization = []
-        annonces.filter( (element) => {
-            req.query.lat=Number(req.query.lat)
-            req.query.lng=Number(req.query.lng)
-            if(element.localization.lat === req.query.lat && element.localization.lng === req.query.lng)
-            {
-              annoncesByLocalization.push(element)
-            }
-            element.localization.lat === req.body.lat && element.localization.lng === req.body.lng
-        });
-        data = v
-      }
+      //  if (req.query.lat && req.query.lng){
+      //   const annoncesByLocalization = []
+      //   annonces.filter( (element) => {
+      //       req.query.lat=Number(req.query.lat)
+      //       req.query.lng=Number(req.query.lng)
+      //       if(element.localization.lat === req.query.lat && element.localization.lng === req.query.lng)
+      //       {
+      //         annoncesByLocalization.push(element)
+      //       }
+      //       element.localization.lat === req.body.lat && element.localization.lng === req.body.lng
+      //   });
+      //   data = v
+      // }
 
-       
-        res.status(200).send({
-          content: annonces
-        });
+       else{
+         res.status(200).send({
+           content: annonces
+         });
+
+       }
         
         
       } catch (err) {
@@ -99,7 +97,6 @@ exports.postAnnonce = async(req, res) => {
                     data: req.body,
                 });
                 res.status(201).send({ ajout_annonce: true, content: annonce });
-        
             }
             catch(err){
                 res.status(500).send({ ajout_annonce: false, message: err });
@@ -129,6 +126,9 @@ exports.getId = async(req, res) => {
             where: {
               Id_Annonce: parseInt(req.params.id),
             },
+            include: {
+              Conseils: true
+            }
           })
           res.status(200).send({ content: annonce });
         }

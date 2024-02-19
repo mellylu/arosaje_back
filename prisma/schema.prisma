@@ -38,6 +38,7 @@ model Annonce {
   Latitude         Float
   Longitude        Float
   Ville            String
+  //Conseils         Conseil          @relation(fields: [Id_Annonce], references: [Id_Conseil])
   Conseils         Conseil[]
   
   //Conversations    Conversation[]
@@ -49,7 +50,9 @@ model Conseil{
   DateCreation    DateTime      @default(now())
   Username        String        @default("Anonyme")
   Message         String
-  Annonce         Annonce       @relation(fields: [Id_Conseil], references: [Id_Annonce])
+  Annonce         Annonce       @relation(fields: [ConseilId], references: [Id_Annonce])
+  ConseilId       Int           @default(2)
+  //Annonce         Annonce[]
 }
 
 // model Entretien{

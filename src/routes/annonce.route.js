@@ -7,6 +7,13 @@ const annonceController = require('../controllers/annonce.controller')
  *   get:
  *     summary: getAll annonces
  *     description: Renvoie la liste des annonces des plantes
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Numéro de la page pour la pagination, il affiche 5 annonces par 5
  *     responses:
  *       200:
  *         description: Affichage de toutes les annonces
@@ -24,9 +31,10 @@ const annonceController = require('../controllers/annonce.controller')
  *                 Latitude: 49.115469,
  *                 Longitude:  -1.082814
  *                 Ville : Saint-Lô
+ *       500:
+ *         description: erreur dans l'affichage des annonces, 
  */
 router.get('/', annonceController.getAll);
-
 
 /**
  * @swagger
@@ -110,6 +118,7 @@ router.post('/', annonceController.postAnnonce);
  *               Latitude: 49.115469,
  *               Longitude:  -1.082814
  *               Ville : Saint-Lô
+ *               Conseils : [{Id_Conseil : 2, DateCreation : 2024-02-19T14:18:10.391Z, Username : Anonyme, Message : Arrosez plus, ConseilId : 2}]
  *       500:
  *         description: message erreur
  *       404:
