@@ -36,21 +36,6 @@ exports.getAll = async(req, res) => {
           });
        }
 
-
-      //  if (req.query.lat && req.query.lng){
-      //   const annoncesByLocalization = []
-      //   annonces.filter( (element) => {
-      //       req.query.lat=Number(req.query.lat)
-      //       req.query.lng=Number(req.query.lng)
-      //       if(element.localization.lat === req.query.lat && element.localization.lng === req.query.lng)
-      //       {
-      //         annoncesByLocalization.push(element)
-      //       }
-      //       element.localization.lat === req.body.lat && element.localization.lng === req.body.lng
-      //   });
-      //   data = v
-      // }
-
        else{
          res.status(200).send({
            content: annonces
@@ -200,6 +185,38 @@ exports.update = async(req, res) => {
 
 
 
+exports.getAllFilter = async(req, res) => {
+  console.log("FFFFFFFFFFF")
+  // try {
+  //   console.log("fffffff")
+  //   const annonces = await prisma.annonce.findMany();
+  //   console.log(req.query.Latitude)
+  //   if (req.query.Latitude && req.query.Longitude){
+  //     console.log("rrrrrrrrrr")
+  //     const v = []
+  //     annonces = annonces.filter( (element) => {
+  //         req.query.Latitude=Number(req.query.Latitude)
+  //         req.query.Longitude=Number(req.query.Longitude)
+  //         console.log(element)
+  //         // if(element.localization.Latitude === req.query.lat && element.localization.lng === req.query.lng)
+  //         // {
+  //         //     v.push(element)
+  //         // }
+  //         // element.localization.lat === req.body.lat && element.localization.lng === req.body.lng
+  //     });
+  //     data = v
+  //     res.status(200).send({
+  //       annonce:annonces
+  //     });
+  //   }
+  //   } catch (err) {
+  //     res.status(500).send({
+  //       message: err.message
+  //     });
+  //   } finally {
+  //     await prisma.$disconnect();
+  //   }
+}
 
 
 //url secure : https://res.cloudinary.com/melly-lucas/image/upload/v1704971723/Arosaje/annonces/plante_kqt4sg.avif

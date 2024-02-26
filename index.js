@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const apiRouter = require('./src/routes');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const cors = require('cors');
 // const {Client} = require('pg')
 // const client = new Client({
 //     user: process.env.USER_BD,
@@ -35,6 +36,8 @@ const swaggerSpec = swaggerJSDoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(bodyParser.json());
+app.use(cors())
+
 
 app.use('/api/v1/', apiRouter);
 

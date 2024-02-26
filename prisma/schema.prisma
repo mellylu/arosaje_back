@@ -40,7 +40,8 @@ model Annonce {
   Ville            String
   //Conseils         Conseil          @relation(fields: [Id_Annonce], references: [Id_Conseil])
   Conseils         Conseil[]
-  
+  //ajouter des images que la personne qui garde les plantes puissent mettre les images des plantes
+  EtatPlantes      String[]
   //Conversations    Conversation[]
   //users            User             @relation(fields: [Id_Annonce], references: [Id_Utilisateur])
 }

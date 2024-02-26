@@ -208,4 +208,7 @@ router.delete('/:id', annonceController.delete);
 router.put('/:id', annonceController.update);
 
 
+
+router.get('/getAllFilter', annonceController.getAllFilter)
+
 module.exports = router;
