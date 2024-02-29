@@ -36,7 +36,6 @@ exports.uploadImage = (req, res) => {
 }
 
 exports.deleteImage = (req, res) => {
-    console.log(req.params.id)
     cloudinary.api.delete_resources(`Arosaje/annonces/${req.params.id}`, function(error, result) {
         if (result){
             if (result.deleted[`Arosaje/annonces/${req.params.id}`] === "deleted")

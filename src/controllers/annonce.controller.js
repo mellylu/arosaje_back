@@ -11,7 +11,20 @@ const prisma = new PrismaClient();
 
 exports.getAll = async(req, res) => {
     try {
-        const annonces = await prisma.annonce.findMany();
+        let annonces = await prisma.annonce.findMany();
+
+
+        if (req.query.Ville){
+          const annoncesFilter = []
+          annonces = annonces.filter( (element) => {
+              if(element.Ville === req.query.Ville)
+              {
+                  annoncesFilter.push(element)
+              }
+          });
+          annonces = annoncesFilter
+         
+        }
   
         //pagination par 5 annonces
         if (req.query.page != undefined){
@@ -20,29 +33,42 @@ exports.getAll = async(req, res) => {
           let top = false
           let bottom = false
           req.query.page = Number(req.query.page) * nb
-          // if (nb + req.query.page >= annonces.length){
-          //      top = true
-          // }
-          // if (req.query.page === 0){
-          //      bottom = true
-          // }
           for(let i = req.query.page; i < nb + req.query.page; i++){
               if(i<annonces.length){
                 annoncesPagination.push(annonces[i])
               }
           }
-          res.status(200).send({
-            content: annoncesPagination
-          });
+          // res.status(200).send({
+          //   content: annoncesPagination
+          // });
+          annonces = annoncesPagination
        }
 
-       else{
+      //  if (req.query.Latitude && req.query.Longitude){
+      //       console.log("rrrrrrrrrr")
+      //       const v = []
+      //       annonces = annonces.filter( (element) => {
+      //           req.query.Latitude=Number(req.query.Latitude)
+      //           req.query.Longitude=Number(req.query.Longitude)
+      //           console.log(element)
+      //           // if(element.localization.Latitude === req.query.lat && element.localization.lng === req.query.lng)
+      //           // {
+      //           //     v.push(element)
+      //           // }
+      //           // element.localization.lat === req.body.lat && element.localization.lng === req.body.lng
+      //       });
+      //       data = v
+      //       res.status(200).send({
+      //         annonce:annonces
+      //       });
+      //     }
+
+     
+       
          res.status(200).send({
            content: annonces
          });
 
-       }
-        
         
       } catch (err) {
         res.status(500).send({
