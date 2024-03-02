@@ -10,10 +10,22 @@ const prisma = new PrismaClient();
 //faire les requêtes cloudinary pour ajouter un element, supprimer une photo etc
 
 exports.getAll = async(req, res) => {
+  console.log(req.query, "req.query")
     try {
         let annonces = await prisma.annonce.findMany();
 
+        annonces.sort((a, b) => {
+          const dateA = new Date(a.DateCreation);
+          const dateB = new Date(b.DateCreation);
 
+          if (dateA > dateB) {
+              return -1;
+          }
+          if (dateA < dateB) {
+              return 1;
+          }
+          return 0;
+        });
         if (req.query.Ville){
           const annoncesFilter = []
           annonces = annonces.filter( (element) => {
@@ -159,7 +171,7 @@ exports.delete = async(req, res) => {
             where: {
               Id_Annonce: parseInt(req.params.id)
             }})
-        res.send({
+        res.status(200).send({
           delete: true
         });
       } catch (err) {
