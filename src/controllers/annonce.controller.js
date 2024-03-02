@@ -166,17 +166,35 @@ exports.getId = async(req, res) => {
 
 
 exports.delete = async(req, res) => {
+  console.log(parseInt(req.params.id), "FFFF")
     try {
-        const annonces = await prisma.annonce.delete({
+      const conseils = await prisma.conseil.deleteMany({
+        where: {
+          ConseilId: parseInt(req.params.id)
+        }})
+        try{
+          const annonces = await prisma.annonce.delete({
             where: {
               Id_Annonce: parseInt(req.params.id)
             }})
         res.status(200).send({
           delete: true
         });
+        }
+        catch(err) {
+          console.log(err)
+          res.status(500).send({
+            message: err.message
+            
+          })
+        }
+
+       
       } catch (err) {
+        console.log(err)
         res.status(500).send({
           message: err.message
+          
         });
       } finally {
         await prisma.$disconnect();
