@@ -223,7 +223,9 @@ exports.update = async(req, res) => {
             Id_Plante : req.body.Id_Plante,
             Longitude: req.body.Longitude,
             Latitude: req.body.Latitude,
-            Ville: req.body.Ville
+            Ville: req.body.Ville,
+            EtatPlantes: req.body.EtatPlantes
+
           }
         })
       res.status(200).send({
@@ -279,3 +281,4 @@ exports.getAllFilter = async(req, res) => {
 
 
 //"https://res.cloudinary.com/melly-lucas/image/upload/v1704971723/Arosaje/annonces/plante_kqt4sg.avif", "https://res.cloudinary.com/melly-lucas/image/upload/v1704971723/Arosaje/annonces/plante2_ppix6p.avif"
+//cf2n96vnymuxuogwarmr
