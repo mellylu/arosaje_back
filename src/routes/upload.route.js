@@ -63,4 +63,8 @@ router.post('/uploadPhotoUser', upload.single("file"), uploadController.uploadIm
 router.delete('/upload/:id', uploadController.deleteImage);
 
 
+router.post('/uploadPhotoEtat', upload.single("file"), uploadController.uploadImageEtat);
+router.delete('/uploadPhotoEtat/:id', uploadController.deleteImageEtat);
+
+
 module.exports = router;

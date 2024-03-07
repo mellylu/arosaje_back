@@ -51,3 +51,48 @@ exports.deleteImage = (req, res) => {
         }
     }); 
 }
+
+
+
+exports.uploadImageEtat = (req, res) => {
+    console.log(req.file)
+    if (req.file) { 
+        let cld_upload_stream = cloudinary.uploader.upload_stream( 
+            { 
+            folder : "Arosaje/EtatAnnonces" 
+            }, 
+            function(error, result) { 
+                if (error){
+                    console.log(error)
+                    res.status(500).send({upload:false, message:error})
+                }
+                if (result){
+                    console.log(result)
+                    res.status(200).send({upload: true, message:result})
+                }
+            }
+        ); 
+        streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream)  
+    }
+    else{
+        res.status(500).json({message : "Vous devez choisir une image"})
+    }
+    
+}
+
+exports.deleteImageEtat = (req, res) => {
+    cloudinary.api.delete_resources(`Arosaje/EtatAnnonces/${req.params.id}`, function(error, result) {
+        if (result){
+            if (result.deleted[`Arosaje/EtatAnnonces/${req.params.id}`] === "deleted")
+            {
+                res.status(200).json({delete : true})
+            }
+            else{
+                res.status(500).json({delete: false})
+            }
+        }
+        else{
+            res.status(500).json({delete : false})
+        }
+    }); 
+}
