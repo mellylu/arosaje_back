@@ -15,7 +15,7 @@
       /npx prisma db push
       /npx prisma migrate dev --name xxxx
 
-  ***Variables d'environnement à copier -> coller dans le .env
+  ***Variables d'environnement à copier -> coller dans le .env***
 
       DATABASE_URL="postgresql://postgres:LCS988-m@localhost:5432/postgres?schema=Arosaje"
       CLOUD_NAME="melly-lucas"
