@@ -1,13 +1,6 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-//le tri descendant ascendant par titre et par date de début et les annonces au alentour de ta localisation
-
-//A POSER COMME QUESTION AU PROF AVOIR DETAILS
-//prise en photo de plantes et partage je sais pas ce que ça veut dire
-
-
-//faire les requêtes cloudinary pour ajouter un element, supprimer une photo etc
 
 exports.getAll = async(req, res) => {
   console.log(req.query, "req.query")
@@ -205,6 +198,7 @@ exports.delete = async(req, res) => {
 exports.update = async(req, res) => {
   try {
     if (req.body.DateDebut){
+      
       req.body.DateDebut = convertirDateEnDateTime(req.body.DateDebut)
     }
     if(req.body.DateFin){
@@ -233,6 +227,7 @@ exports.update = async(req, res) => {
         annonce:annonces
       });
     } catch (err) {
+      console.log(err)
       res.status(500).send({
         message: err.message
       });
