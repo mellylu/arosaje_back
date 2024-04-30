@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//6.2
 model User {
   Id_Utilisateur   Int        @id @default(autoincrement())
   Civilite         String
@@ -22,9 +23,11 @@ model User {
   Longitude        Float
   Ville            String
   Botanniste       Boolean    @default(false)
-  //Annonces         Annonce[]
+  Annonces         Annonce[]
  // GardesPlantes    GardePlantes             @relation(fields: [Id_Utilisateur], references: [Id_GardePlante])
 }
+//fin 6.2
+
 
 model Annonce {
   Id_Annonce       Int              @id @default(autoincrement())
@@ -44,6 +47,11 @@ model Annonce {
   EtatPlantes      String[]
   //Conversations    Conversation[]
   //users            User             @relation(fields: [Id_Annonce], references: [Id_Utilisateur])
+  
+  //6.2
+  Annonce          User             @relation(fields: [AnnonceUser], references: [Id_Utilisateur])
+  AnnonceUser      Int              @default(1)
+  //fin 6.2
 }
 
 model Conseil{

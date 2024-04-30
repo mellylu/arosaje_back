@@ -64,6 +64,7 @@ exports.register = async(req, res) => {
 
 
 exports.login = async(req, res) => {
+  console.log("rrrrrrr")
   try{
     const user = await prisma.user
     .findUnique({
@@ -71,6 +72,10 @@ exports.login = async(req, res) => {
          Email: req.body.Email,
        },
      })
+     console.log(req.body.Email)
+     console.log(user)
+     console.log(req.body.Mdp)
+     console.log(user.Mdp)
      let passwordValid = bcrypt.compareSync(req.body.Mdp, user.Mdp)
      if (!passwordValid) {
         return res.status(401).send({
@@ -149,3 +154,27 @@ exports.verifyToken = (req, res, next) => {
     
   })
 }
+
+
+exports.getId = async(req, res) => {
+  try {
+      const user = await prisma.user
+       .findUnique({
+          where: {
+            Id_Utilisateur: parseInt(req.params.id),
+          },
+          include: {
+            Annonces: true,
+          },
+        })
+        res.status(200).send({ content: user });
+      }
+      catch(err){
+        res.status(500).send({ message: err });
+          
+      }
+  finally {
+      await prisma.$disconnect();
+    }
+}
+

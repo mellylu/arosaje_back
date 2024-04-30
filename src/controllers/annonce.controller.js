@@ -109,6 +109,7 @@ exports.postAnnonce = async(req, res) => {
                 
                 req.body.DateDebut = convertirDateEnDateTime(req.body.DateDebut)
                 req.body.DateFin = convertirDateEnDateTime(req.body.DateFin)
+                req.body.AnnonceUser = 1
                 const annonce = await prisma.annonce.create({
                     data: req.body,
                 });
@@ -143,8 +144,8 @@ exports.getId = async(req, res) => {
               Id_Annonce: parseInt(req.params.id),
             },
             include: {
-              Conseils: true
-            }
+              Conseils: true,
+            },
           })
           res.status(200).send({ content: annonce });
         }
