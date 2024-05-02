@@ -24,6 +24,12 @@ model User {
   Ville            String
   Botanniste       Boolean    @default(false)
   Annonces         Annonce[]
+  //ajouter notifications c'est là où il y aura les demandes des plantes pour une annonce et 
+  //quand on confirme la notification est supprimée et gardesPlante est alimentée avec le nomDelUtilisateur
+  //le nom du gardien et l'annonce
+
+  //ajouter un champ les plantes que je garde
+
  // GardesPlantes    GardePlantes             @relation(fields: [Id_Utilisateur], references: [Id_GardePlante])
 }
 //fin 6.2
