@@ -115,18 +115,18 @@ exports.formResetPassword = async(req, res) => {
 
 
 exports.updatepassword = async(req, res) => {
-        
+        console.log(typeof parseInt(req.params.id))
     try{
-        console.log(user, "USER")
+        
         const userUpdate = await prisma.user.update({
             where: {
-                Id_Utilisateur: parseInt(req.body.Id_Utilisateur)
+                Id_Utilisateur: req.body.Id_Utilisateur
             },
             data: 
             {
                 Mdp: bcrypt.hashSync(req.body.Mdp, 10),
             }
-            })
+        })
 
             
         res.status(200).send({
