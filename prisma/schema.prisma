@@ -24,7 +24,6 @@ model User {
   Ville            String
   Botanniste       Boolean    @default(false)
   Annonces         Annonce[]
-  Tokens           Token[]
  // GardesPlantes    GardePlantes             @relation(fields: [Id_Utilisateur], references: [Id_GardePlante])
 }
 //fin 6.2
@@ -76,10 +75,8 @@ model Conseil{
 
 
 model Token {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [Id_Utilisateur])
-  userId    Int
-  token     String?
+  userId    Int      @unique
+  token     String?  @unique
   createdAt DateTime @default(now())
 }
 

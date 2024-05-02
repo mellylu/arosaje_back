@@ -18,61 +18,55 @@ exports.sendEmailToResetPassword = async(req, res) => {
                     Email: req.body.Email,
                 },
             })
-            console.log("user", user)
+           
 
             try{
+                console.log("user", user)
                 let token = await prisma.token.findUnique({
                     where:{
                         userId: user?.Id_Utilisateur,
                     }
                 })
                 console.log("token1", token)
-                // if(token){
-                    sendEmail.sendEmail(req, res, token, req.body.Email)
-                        res.status(200).send({
-                            success: true,
-                            message: "Email sended",
-                            // email: user?.email,
-                        });
-                // }
-                // else{
+                if(token){
+                    sendEmail.sendEmail(req, res, req.body.Email, token)
+                        
+                }
+                else{
+                    const userToken = jwt.sign(
+                        {
+                            hash: randomString.generate(100),
+                        },
+                        JWT_SECRET,
+                        {
+                            expiresIn: 86400,
+                        },
+                    );
+    
+                    try{
+                        const token = await prisma.token.create({
+                            data: {
+                                userId: user.Id_Utilisateur, 
+                                token: userToken,
+                            }
+                        })
+                        console.log("token2", token)
+                        sendEmail.sendEmail(req, res, req.body.email, token)
+                        
+                    }
+                    catch(err){
+                        console.log(err)
+                    }
+                    finally {
+                        await prisma.$disconnect();
+                    }
                    
-                // }
+                }
                 
             }
             catch(err){
                 console.log("err", err)
-                const userToken = jwt.sign(
-                    {
-                        hash: randomString.generate(100),
-                    },
-                    JWT_SECRET,
-                    {
-                        expiresIn: 86400,
-                    },
-                );
-
-                try{
-                    const token = await prisma.token.create({
-                        data: {
-                            userId: user.Id_Utilisateur, 
-                            token: userToken,
-                        }
-                    })
-                    console.log("token2", token)
-                    sendEmail.sendEmail(req, res, token, req.body.email)
-                    res.status(200).send({
-                        success: true,
-                        message: "Email sended",
-                        // email: user?.email,
-                    });
-                }
-                catch(err){
-                    console.log(err)
-                }
-                finally {
-                    await prisma.$disconnect();
-                }
+                
             }
             finally {
                 await prisma.$disconnect();
@@ -93,4 +87,63 @@ exports.sendEmailToResetPassword = async(req, res) => {
     }
     
                         
+}
+
+
+exports.formResetPassword = async(req, res) => {
+    try{
+        let token = await prisma.token.findUnique({
+            where:{
+                token: req.body.token,
+            }
+        })
+        res.status(200).send({
+            token: token
+        })
+    }
+    catch(err){
+        res.status(500).send({
+            message: err.message || "Some error occured"
+        })
+    }
+    finally {
+        await prisma.$disconnect();
+    }
+    
+            
+}
+
+
+exports.updatepassword = async(req, res) => {
+        
+    try{
+        console.log(user, "USER")
+        const userUpdate = await prisma.user.update({
+            where: {
+                Id_Utilisateur: parseInt(req.body.Id_Utilisateur)
+            },
+            data: 
+            {
+                Mdp: bcrypt.hashSync(req.body.Mdp, 10),
+            }
+            })
+
+            
+        res.status(200).send({
+                update: true
+            })
+    }
+    catch(err){
+        res.status(500).send({
+            message: err.message || "Some error occured"
+        })
+    }
+    finally {
+        await prisma.$disconnect();
+    }
+        
+    
+   
+    
+      
 }
