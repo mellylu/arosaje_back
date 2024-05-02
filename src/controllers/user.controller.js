@@ -45,7 +45,7 @@ exports.register = async(req, res) => {
               expiresIn: 86400,
             },
             )
-            res.status(200).send({ register: true, data: user, token: userToken });
+            res.status(201).send({ register: true, data: user, token: userToken });
          }
         // console.log(userToken, "usertoken")
         // console.log(process.env.JWT_SECRET)
@@ -121,39 +121,6 @@ exports.getAll = async (req, res) => {
     await prisma.$disconnect();
   }
 };
-
-
-exports.verifyToken = (req, res, next) => {
-    
-  let token = req.headers.authorization
-
-  if (!token) {
-    
-    return res.status(403).send({
-        auth : false,
-        token : null,
-        message : 'Missing token'
-    })
-  }
-  jwt.verify(token, process.env.JWT_SECRET,
-  function(error, jwtdecoded) { 
-
-    if (error) {
-        next();
-        return res.status(401).send({
-            auth : false,
-            token : null,
-            message : "not authorized"
-        })
-    }
-    else{
-        return res.status(200).send({
-            auth : true,
-        })
-    }
-    
-  })
-}
 
 
 exports.getId = async(req, res) => {
