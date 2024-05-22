@@ -10,6 +10,15 @@ COPY package.json package-lock.json ./
 # Installer les dépendances
 RUN npm install
 
+# Générer le client Prisma
+RUN npx prisma generate
+
+# Pousser la base de données Prisma
+RUN npx prisma db push
+
+# Appliquer les migrations Prisma
+RUN npx prisma migrate dev --name migration
+
 # Copier le reste des fichiers de l'application
 COPY . .
 
