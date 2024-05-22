@@ -64,7 +64,6 @@ exports.register = async(req, res) => {
 
 
 exports.login = async(req, res) => {
-  console.log("rrrrrrr")
   try{
     const user = await prisma.user
     .findUnique({
@@ -72,10 +71,7 @@ exports.login = async(req, res) => {
          Email: req.body.Email,
        },
      })
-     console.log(req.body.Email)
-     console.log(user)
-     console.log(req.body.Mdp)
-     console.log(user.Mdp)
+     
      let passwordValid = bcrypt.compareSync(req.body.Mdp, user.Mdp)
      if (!passwordValid) {
         return res.status(401).send({
@@ -95,6 +91,8 @@ exports.login = async(req, res) => {
       res.status(200).send({
           auth: true,
           token: userToken,
+          pseudo: user.Pseudo,
+          id : user.Id_Utilisateur
           // username: user.username,
           // id: user._id,
           // image: user.image,
@@ -145,3 +143,42 @@ exports.getId = async(req, res) => {
     }
 }
 
+
+exports.putId = async(req, res) => {
+  console.log(req.params.id)
+  console.log(req.body)
+  try{
+  const user = await prisma.user.update({
+    where: {
+      Id_Utilisateur: parseInt(req.params.id)
+    },
+    data: 
+    {
+
+      Civilite : req.body.Civilite,
+      Pseudo : req.body.Pseudo,
+      Prenom : req.body.Prenom,
+      Nom : req.body.Nom,
+      Email : req.body.Email,
+      Longitude: req.body.Longitude,
+      Latitude: req.body.Latitude,
+      Ville: req.body.Ville,
+      Image: req.body.Image,
+      Botanniste: req.body.Botanniste
+
+    }
+  })
+  
+  res.status(200).send({
+    update: true,
+    user:user
+  });
+  } catch (err) {
+  console.log(err)
+  res.status(500).send({
+    message: err.message
+  });
+  } finally {
+  await prisma.$disconnect();
+  }
+}

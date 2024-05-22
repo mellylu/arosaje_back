@@ -96,3 +96,30 @@ exports.deleteImageEtat = (req, res) => {
         }
     }); 
 }
+
+
+exports.uploadImageUser = (req, res) => {
+    console.log(req.file)
+    if (req.file) { 
+        let cld_upload_stream = cloudinary.uploader.upload_stream( 
+            { 
+            folder : "Arosaje/users" 
+            }, 
+            function(error, result) { 
+                if (error){
+                    console.log(error)
+                    res.status(500).send({upload:false, message:error})
+                }
+                if (result){
+                    console.log(result)
+                    res.status(200).send({upload: true, message:result})
+                }
+            }
+        ); 
+        streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream)  
+    }
+    else{
+        res.status(500).json({message : "Vous devez choisir une image"})
+    }
+    
+}

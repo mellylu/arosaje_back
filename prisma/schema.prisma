@@ -24,6 +24,7 @@ model User {
   Ville            String
   Botanniste       Boolean    @default(false)
   Annonces         Annonce[]
+  Image            String     @default("")
   //ajouter notifications c'est là où il y aura les demandes des plantes pour une annonce et 
   //quand on confirme la notification est supprimée et gardesPlante est alimentée avec le nomDelUtilisateur
   //le nom du gardien et l'annonce

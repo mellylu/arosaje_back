@@ -125,5 +125,7 @@ router.post('/login', userController.login);
  */
 router.get('/:id', verifyToken, userController.getId);
 
+router.put('/:id',  userController.putId);
+
 
 module.exports = router;
