@@ -21,3 +21,11 @@
       CLOUD_NAME="melly-lucas"
       API_KEY="647417452658933"
       API_SECRET="gsgUPDpXcAfS4oNKH_Pgo3jXc7I"
+      PORT="8080"
+      JWT_SECRET="secret"
+      PASSWORD="Melvyn98@"
+
+      
+
+
+   
