@@ -95,6 +95,7 @@ exports.postAnnonce = async(req, res) => {
     // if (req.body.Desciption == undefined || req.body.length < 20 || req.body.length > 500){
     //     res.status(200).send({ ajout_annonce: false, message: "Le titre est obligatoire et doit contenir au minimum 5 caractères et au maximum 30 caractères" });
     // }
+    console.log(req.body)
     if (req.body.Titre == undefined || req.body.Description == undefined || req.body.DateDebut == undefined || req.body.DateFin == undefined){
         res.status(200).send({ ajout_annonce: false, message: "Tous les champs sont obligatoires" });
     }
@@ -109,7 +110,7 @@ exports.postAnnonce = async(req, res) => {
                 
                 req.body.DateDebut = convertirDateEnDateTime(req.body.DateDebut)
                 req.body.DateFin = convertirDateEnDateTime(req.body.DateFin)
-                req.body.AnnonceUser = 1
+               // req.body.AnnonceUser = 1
                 const annonce = await prisma.annonce.create({
                     data: req.body,
                 });

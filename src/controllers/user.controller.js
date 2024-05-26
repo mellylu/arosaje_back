@@ -92,7 +92,8 @@ exports.login = async(req, res) => {
           auth: true,
           token: userToken,
           pseudo: user.Pseudo,
-          id : user.Id_Utilisateur
+          id : user.Id_Utilisateur,
+          image : user.Image
           // username: user.username,
           // id: user._id,
           // image: user.image,

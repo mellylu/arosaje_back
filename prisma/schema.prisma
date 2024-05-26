@@ -23,8 +23,9 @@ model User {
   Longitude        Float
   Ville            String
   Botanniste       Boolean    @default(false)
-  Annonces         Annonce[]
+  Annonces         Annonce[]  @relation("AnnoncesRelation")
   Image            String     @default("")
+  Gardiennage      Annonce[]  @relation("GardiennageRelation")
   //ajouter notifications c'est là où il y aura les demandes des plantes pour une annonce et 
   //quand on confirme la notification est supprimée et gardesPlante est alimentée avec le nomDelUtilisateur
   //le nom du gardien et l'annonce
@@ -56,9 +57,10 @@ model Annonce {
   //users            User             @relation(fields: [Id_Annonce], references: [Id_Utilisateur])
   
   //6.2
-  Annonce          User             @relation(fields: [AnnonceUser], references: [Id_Utilisateur])
-  AnnonceUser      Int              @default(1)
-  //fin 6.2
+  Annonce          User             @relation("AnnoncesRelation", fields: [AnnonceUser], references: [Id_Utilisateur])
+  AnnonceUser      Int              
+  AnnonceGardien   User             @relation("GardiennageRelation", fields: [AnnonceUserGard], references: [Id_Utilisateur])//fin 6.2
+  AnnonceUserGard  Int 
 }
 
 model Conseil{
