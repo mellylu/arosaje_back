@@ -32,4 +32,4 @@ COPY . .
 EXPOSE 3000
 
 # Commande par défaut pour démarrer l'application
-CMD ["sh", "-c", "until pg_isready -h db -p 5432; do echo waiting for database; sleep 2; done; npx prisma migrate dev --name migration --schema=./prisma/schema.prisma && npm start"]
+CMD ["npm", "start"]
