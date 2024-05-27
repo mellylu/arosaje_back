@@ -42,6 +42,7 @@ exports.post = async(req, res) => {
         const conseil = await prisma.conseil.create({
           data: {
             Message: req.body.Message,
+            Username: req.body.Username,
             ConseilId: parseInt(req.body.ConseilId)
         }
         });
