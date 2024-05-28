@@ -146,6 +146,8 @@ exports.getId = async(req, res) => {
             },
             include: {
               Conseils: true,
+              Annonce:true,
+              AnnonceGardien:true
             },
           })
           res.status(200).send({ content: annonce });
@@ -220,7 +222,8 @@ exports.update = async(req, res) => {
             Longitude: req.body.Longitude,
             Latitude: req.body.Latitude,
             Ville: req.body.Ville,
-            EtatPlantes: req.body.EtatPlantes
+            EtatPlantes: req.body.EtatPlantes,
+            AnnonceUserGard : req.body.AnnonceUserGard
 
           }
         })

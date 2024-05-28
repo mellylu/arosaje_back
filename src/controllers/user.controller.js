@@ -131,6 +131,8 @@ exports.getId = async(req, res) => {
           },
           include: {
             Annonces: true,
+            UserGardien:true,
+            // Gardiennage:true
           },
         })
         res.status(200).send({ content: user });
