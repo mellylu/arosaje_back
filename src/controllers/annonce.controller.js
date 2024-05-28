@@ -19,6 +19,42 @@ exports.getAll = async(req, res) => {
           }
           return 0;
         });
+
+        //debut de ce que je rajoute
+
+        if(req.query.IsVisiblePublication == 'true'){
+          const annoncesFilter = []
+          annonces = annonces.filter( (element) => {
+              if(element.Etat === false)
+              {
+                  annoncesFilter.push(element)
+              }
+          });
+          annonces = annoncesFilter
+        }
+        if(req.query.IsVisibleGardiennage == 'true'){
+          const annoncesFilter = []
+          annonces = annonces.filter( (element) => {
+              if(element.Etat === true)
+              {
+                annoncesFilter.push(element)
+              }
+          });
+          annonces = annoncesFilter
+        }
+        if(!req.query.IsVisiblePublication && !req.query.IsVisibleGardiennage){
+          const annoncesFilter = []
+          annonces = annonces.filter( (element) => {
+              if(element.Etat === false)
+              {
+                  annoncesFilter.push(element)
+              }
+          });
+          annonces = annoncesFilter
+        }
+
+        //fin de ce que je rajoute
+console.log(annonces.length)
         if (req.query.Ville){
           const annoncesFilter = []
           annonces = annonces.filter( (element) => {
@@ -28,8 +64,8 @@ exports.getAll = async(req, res) => {
               }
           });
           annonces = annoncesFilter
-         
         }
+        console.log(annonces.length, "ll")
   
         //pagination par 5 annonces
         if (req.query.page != undefined){
