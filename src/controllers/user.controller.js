@@ -123,6 +123,7 @@ exports.getAll = async (req, res) => {
 
 
 exports.getId = async(req, res) => {
+  console.log(req.params, "req params")
   try {
       const user = await prisma.user
        .findUnique({
@@ -131,9 +132,9 @@ exports.getId = async(req, res) => {
           },
           include: {
             Annonces: true,
-            UserGardien:true,
+            // UserGardien:true,
             Gardiennage:true
-            // Gardiennage:true
+           
           },
         })
         res.status(200).send({ content: user });
