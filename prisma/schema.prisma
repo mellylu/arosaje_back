@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//6.2
+
 model User {
   Id_Utilisateur   Int        @id @default(autoincrement())
   Civilite         String
@@ -26,24 +26,9 @@ model User {
   Annonces         Annonce[]  @relation("AnnoncesRelation")
   Image            String     @default("")
   Gardiennage      Annonce[]  @relation("GardiennageRelation")
-  //ajouter notifications c'est là où il y aura les demandes des plantes pour une annonce et 
-  //quand on confirme la notification est supprimée et gardesPlante est alimentée avec le nomDelUtilisateur
-  //le nom du gardien et l'annonce
-
-  //ajouter un champ les plantes que je garde
-
- // GardesPlantes    GardePlantes             @relation(fields: [Id_Utilisateur], references: [Id_GardePlante])
-  // UserPrio         GardePlantes?     @relation("UserProprietaireRelation")
-  // UserPrioGP       Int?              
-  // UserGard         GardePlantes?     @relation("UserGardienRelation")
-  // UserGardGP       Int?
-  UserProprietaire  GardePlantes[] @relation("UserProprietaireRelation")
-  UserGardien       GardePlantes[] @relation("UserGardienRelation")
-
-  // Notifications     
-
+  // UserProprietaire  GardePlantes[] @relation("UserProprietaireRelation")
+  // UserGardien       GardePlantes[] @relation("UserGardienRelation")
 }
-//fin 6.2
 
 
 model Annonce {
@@ -58,21 +43,16 @@ model Annonce {
   Latitude         Float
   Longitude        Float
   Ville            String
-  //Conseils         Conseil          @relation(fields: [Id_Annonce], references: [Id_Conseil])
-  Conseils         Conseil[]
-  //ajouter des images que la personne qui garde les plantes puissent mettre les images des plantes
+ Conseils         Conseil[]
   EtatPlantes      String[]
-  //Conversations    Conversation[]
-  //users            User             @relation(fields: [Id_Annonce], references: [Id_Utilisateur])
   
-  //6.2
+
   Annonce          User             @relation("AnnoncesRelation", fields: [AnnonceUser], references: [Id_Utilisateur])
   AnnonceUser      Int              
   AnnonceGardien   User?            @relation("GardiennageRelation", fields: [AnnonceUserGard], references: [Id_Utilisateur])//fin 6.2
   AnnonceUserGard  Int?   
 
-  AnnonceGP        GardePlantes[]   
-  // AnnonceGPP       Int?              
+  // AnnonceGP        GardePlantes[]             
 }
 
 model Conseil{
@@ -82,16 +62,8 @@ model Conseil{
   Message         String
   Annonce         Annonce       @relation(fields: [ConseilId], references: [Id_Annonce])
   ConseilId       Int           @default(2)
-  //Annonce         Annonce[]
 }
 
-// model Entretien{
-//   Id_Entretien
-//   Id_Annonce
-//   photos
-//   Date
-//   Commentaire
-// }
 
 
 
@@ -102,30 +74,16 @@ model Token {
 }
 
 
+// model GardePlantes {
+//   Id_GardePlante            Int     @id @default(autoincrement())
+//   UtilisateurProprietaire   User    @relation("UserProprietaireRelation", fields: [UtilisateurProprietaireId], references: [Id_Utilisateur])
+//   UtilisateurProprietaireId Int
+//   UtilisateurGardien        User    @relation("UserGardienRelation", fields: [UtilisateurGardienId], references: [Id_Utilisateur])
+//   UtilisateurGardienId    Int
+//   Annonces                  Annonce @relation(fields: [AnnoncesId], references: [Id_Annonce])
+//   AnnoncesId              Int
 
-//6.2
-
-model GardePlantes {
-  Id_GardePlante            Int     @id @default(autoincrement())
-  // UtilisateurProprietaire   User    @relation("UserProprietaireRelation", fields: [UtilisateurProprietaireId], references: [Id_Utilisateur])
-  // UtilisateurProprietaireId Int     @unique
-  // UtilisateurGardien        User    @relation("UserGardienRelation", fields: [UtilisateurGardienId], references: [Id_Utilisateur])
-  // UtilisateurGardienId      Int     @unique
-  // Annonces                  Annonce @relation(fields: [AnnoncesId], references: [Id_Annonce])
-  // AnnoncesId                Int     @unique
-  
-  // Id_GardePlante                Int        @id @default(autoincrement())
-  // UtilisateurProprietaire       User[]     @relation("UserProprietaireRelation")
-  // UtilisateurGardien            User[]     @relation("UserGardienRelation")
-  // Annonces                      Annonce[]
-UtilisateurProprietaire   User    @relation("UserProprietaireRelation", fields: [UtilisateurProprietaireId], references: [Id_Utilisateur])
-  UtilisateurProprietaireId Int
-  UtilisateurGardien        User    @relation("UserGardienRelation", fields: [UtilisateurGardienId], references: [Id_Utilisateur])
-  UtilisateurGardienId    Int
-  Annonces                  Annonce @relation(fields: [AnnoncesId], references: [Id_Annonce])
-  AnnoncesId              Int
-
-}
+// }
 
 // model ConseilsBotanistes {
 //   Id_ConseilBotaniste        Int      @id

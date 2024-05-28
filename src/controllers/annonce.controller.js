@@ -223,7 +223,8 @@ exports.update = async(req, res) => {
             Latitude: req.body.Latitude,
             Ville: req.body.Ville,
             EtatPlantes: req.body.EtatPlantes,
-            AnnonceUserGard : req.body.AnnonceUserGard
+            AnnonceUserGard : req.body.AnnonceUserGard,
+            Etat:req.body.Etat
 
           }
         })
