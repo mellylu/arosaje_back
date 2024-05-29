@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const annonceController = require('../controllers/annonce.controller')
+const verifyToken = require('../helpers/verifyToken')
+
+
 /**
  * @swagger
  * /api/v1/annonces:
@@ -205,7 +208,7 @@ router.delete('/:id', annonceController.delete);
  *       404:
  *         description: Annonce non trouvée
  */
-router.put('/:id', annonceController.update);
+router.put('/:id', verifyToken, annonceController.update);
 
 
 
