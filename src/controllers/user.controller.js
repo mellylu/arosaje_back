@@ -88,12 +88,14 @@ exports.login = async(req, res) => {
       {
           expiresIn: 86400
       })
+      console.log(user, "user")
       res.status(200).send({
           auth: true,
           token: userToken,
           pseudo: user.Pseudo,
           id : user.Id_Utilisateur,
-          image : user.Image
+          image : user.Image,
+          botanniste : user.Botanniste
           // username: user.username,
           // id: user._id,
           // image: user.image,
