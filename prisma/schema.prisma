@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -14,11 +15,11 @@ datasource db {
 model User {
   Id_Utilisateur   Int        @id @default(autoincrement())
   Civilite         String
-  Pseudo           String     
-  Prenom           String     
-  Nom              String     
+  Pseudo           String
+  Prenom           String
+  Nom              String
   Email            String     @unique
-  Mdp              String    
+  Mdp              String
   Latitude         Float
   Longitude        Float
   Ville            String
@@ -45,14 +46,14 @@ model Annonce {
   Ville            String
  Conseils         Conseil[]
   EtatPlantes      String[]
-  
+
 
   Annonce          User             @relation("AnnoncesRelation", fields: [AnnonceUser], references: [Id_Utilisateur])
-  AnnonceUser      Int              
+  AnnonceUser      Int
   AnnonceGardien   User?            @relation("GardiennageRelation", fields: [AnnonceUserGard], references: [Id_Utilisateur])//fin 6.2
-  AnnonceUserGard  Int?   
+  AnnonceUserGard  Int?
 
-  // AnnonceGP        GardePlantes[]             
+  // AnnonceGP        GardePlantes[]
 }
 
 model Conseil{
@@ -87,7 +88,7 @@ model Token {
 
 // model ConseilsBotanistes {
 //   Id_ConseilBotaniste        Int      @id
-//   Id_UtilisateurBotaniste    Int    
+//   Id_UtilisateurBotaniste    Int
 //   Id_Plante                  Int
 //   ConseilEntretien           String
 //   DateConseil                DateTime @default(now())
@@ -95,7 +96,7 @@ model Token {
 
 // model Conversation {
 //   Id_Conversation               Int      @id
-//   Id_UtilisateurProprietaire    Int    
+//   Id_UtilisateurProprietaire    Int
 //   Id_UtilisateurGardien         Int
 //   Id_Message                    Message[]
 //   //Annonces                      Annonce             @relation(fields: [Id_Conversation], references: [Id_Annonce])
@@ -103,7 +104,7 @@ model Token {
 
 // model Message {
 //   Id_Message               Int             @id
-//   MessageProprietaire      String    
+//   MessageProprietaire      String
 //   MessageGardien           String
 //   DatePropretaire          DateTime        @default(now())
 //   DateGardien              DateTime        @default(now())
