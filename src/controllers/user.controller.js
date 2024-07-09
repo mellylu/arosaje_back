@@ -135,7 +135,17 @@ exports.getId = async(req, res) => {
           include: {
             Annonces: true,
             // UserGardien:true,
-            Gardiennage:true
+            Gardiennage:true,
+            conversations1: {
+              include: {
+                Messages: true,
+              },
+            },
+            conversations2:{
+              include: {
+              Messages: true,
+            },
+          }
            
           },
         })

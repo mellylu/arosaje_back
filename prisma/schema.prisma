@@ -26,8 +26,8 @@ model User {
   Annonces         Annonce[]  @relation("AnnoncesRelation")
   Image            String     @default("")
   Gardiennage      Annonce[]  @relation("GardiennageRelation")
-  // UserProprietaire  GardePlantes[] @relation("UserProprietaireRelation")
-  // UserGardien       GardePlantes[] @relation("UserGardienRelation")
+  conversations1   Conversation[] @relation("User1Conversations")
+  conversations2   Conversation[] @relation("User2Conversations")
 }
 
 
@@ -45,14 +45,10 @@ model Annonce {
   Ville            String
  Conseils         Conseil[]
   EtatPlantes      String[]
-  
-
   Annonce          User             @relation("AnnoncesRelation", fields: [AnnonceUser], references: [Id_Utilisateur])
   AnnonceUser      Int              
   AnnonceGardien   User?            @relation("GardiennageRelation", fields: [AnnonceUserGard], references: [Id_Utilisateur])//fin 6.2
-  AnnonceUserGard  Int?   
-
-  // AnnonceGP        GardePlantes[]             
+  AnnonceUserGard  Int?         
 }
 
 model Conseil{
@@ -74,39 +70,22 @@ model Token {
 }
 
 
-// model GardePlantes {
-//   Id_GardePlante            Int     @id @default(autoincrement())
-//   UtilisateurProprietaire   User    @relation("UserProprietaireRelation", fields: [UtilisateurProprietaireId], references: [Id_Utilisateur])
-//   UtilisateurProprietaireId Int
-//   UtilisateurGardien        User    @relation("UserGardienRelation", fields: [UtilisateurGardienId], references: [Id_Utilisateur])
-//   UtilisateurGardienId    Int
-//   Annonces                  Annonce @relation(fields: [AnnoncesId], references: [Id_Annonce])
-//   AnnoncesId              Int
 
-// }
+model Conversation {
+  Id_Conversation Int          @id @default(autoincrement())
+  user1Id         Int
+  user2Id         Int
+  user1           User         @relation("User1Conversations", fields: [user1Id], references: [Id_Utilisateur])
+  user2           User         @relation("User2Conversations", fields: [user2Id], references: [Id_Utilisateur])
+  Messages        Message[]    @relation("ConversationMessages")
+}
 
-// model ConseilsBotanistes {
-//   Id_ConseilBotaniste        Int      @id
-//   Id_UtilisateurBotaniste    Int    
-//   Id_Plante                  Int
-//   ConseilEntretien           String
-//   DateConseil                DateTime @default(now())
-// }
+model Message {
+  Id_Message      Int          @id @default(autoincrement())
+  text            String
+  conversationId  Int
+  conversation    Conversation @relation("ConversationMessages", fields: [conversationId], references: [Id_Conversation])
+  userId          Int
+}
 
-// model Conversation {
-//   Id_Conversation               Int      @id
-//   Id_UtilisateurProprietaire    Int    
-//   Id_UtilisateurGardien         Int
-//   Id_Message                    Message[]
-//   //Annonces                      Annonce             @relation(fields: [Id_Conversation], references: [Id_Annonce])
-// }
-
-// model Message {
-//   Id_Message               Int             @id
-//   MessageProprietaire      String    
-//   MessageGardien           String
-//   DatePropretaire          DateTime        @default(now())
-//   DateGardien              DateTime        @default(now())
-//   Conversation             Conversation    @relation(fields: [Id_Message], references: [Id_Conversation])
-// }
 

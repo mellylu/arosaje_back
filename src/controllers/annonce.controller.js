@@ -6,6 +6,7 @@ exports.getAll = async(req, res) => {
   console.log(req.query, "req.query")
     try {
         let annonces = await prisma.annonce.findMany();
+        console.log(annonces)
 
         annonces.sort((a, b) => {
           const dateA = new Date(a.DateCreation);
@@ -112,6 +113,7 @@ console.log(annonces.length)
 
         
       } catch (err) {
+        console.log(err)
         res.status(500).send({
           error: 500,
           message: err.message

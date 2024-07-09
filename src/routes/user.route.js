@@ -123,7 +123,8 @@ router.post('/login', userController.login);
  *       404:
  *         description: utilisateur non trouvée
  */
-router.get('/:id', verifyToken, userController.getId);
+// router.get('/:id', verifyToken, userController.getId);
+router.get('/:id',userController.getId);
 
 router.put('/:id',  userController.putId);
 
