@@ -79,6 +79,8 @@ model Conversation {
   user1           User         @relation("User1Conversations", fields: [user1Id], references: [Id_Utilisateur])
   user2           User         @relation("User2Conversations", fields: [user2Id], references: [Id_Utilisateur])
   Messages        Message[]    @relation("ConversationMessages")
+  isDelete        Boolean      @default(false)
+  DateCreation    DateTime      @default(now())
 }
 
 model Message {
@@ -87,6 +89,7 @@ model Message {
   conversationId  Int
   conversation    Conversation @relation("ConversationMessages", fields: [conversationId], references: [Id_Conversation])
   userId          Int
+  DateCreation    DateTime      @default(now())
 }
 
 
