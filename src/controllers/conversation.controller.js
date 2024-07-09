@@ -7,6 +7,7 @@ exports.post = async(req, res) => {
             data: {
               user1Id: req.body.user1,
               user2Id: req.body.user2,
+              annonceId : req.body.annonce
             },
           });
         res.status(201).send({ ajout_conversation: true, content: conversation });
@@ -44,8 +45,7 @@ exports.getAll = async (req, res) => {
               Id_Conversation: parseInt(req.params.id),
             },
             include: {
-             Messages:true
-             
+             Messages:true,
             },
           })
           res.status(200).send({ content: conversation });

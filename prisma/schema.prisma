@@ -38,8 +38,8 @@ model Annonce {
   Titre            String
   Description      String
   Etat             Boolean          @default(false)
-  DateDebut        DateTime?
-  DateFin          DateTime?
+  DateDebut        DateTime
+  DateFin          DateTime
   DateCreation     DateTime         @default(now())
   Latitude         Float
   Longitude        Float
@@ -49,7 +49,8 @@ model Annonce {
   Annonce          User             @relation("AnnoncesRelation", fields: [AnnonceUser], references: [Id_Utilisateur])
   AnnonceUser      Int
   AnnonceGardien   User?            @relation("GardiennageRelation", fields: [AnnonceUserGard], references: [Id_Utilisateur])//fin 6.2
-  AnnonceUserGard  Int?         
+  AnnonceUserGard  Int? 
+  conversation     Conversation?    @relation("AnnonceConversations")       
 }
 
 model Conseil{
@@ -80,7 +81,9 @@ model Conversation {
   user2           User         @relation("User2Conversations", fields: [user2Id], references: [Id_Utilisateur])
   Messages        Message[]    @relation("ConversationMessages")
   isDelete        Boolean      @default(false)
-  DateCreation    DateTime      @default(now())
+  DateCreation    DateTime     @default(now())
+  annonceId       Int          @unique
+  annonce         Annonce      @relation("AnnonceConversations", fields: [annonceId], references: [Id_Annonce])
 }
 
 model Message {

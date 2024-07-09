@@ -185,7 +185,7 @@ exports.getId = async(req, res) => {
             include: {
               Conseils: true,
               Annonce:true,
-              AnnonceGardien:true
+              AnnonceGardien:true,
             },
           })
           res.status(200).send({ content: annonce });
