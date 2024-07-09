@@ -139,11 +139,15 @@ exports.getId = async(req, res) => {
             conversations1: {
               include: {
                 Messages: true,
+                user1:true,
+                user2:true
               },
             },
             conversations2:{
               include: {
               Messages: true,
+              user1:true,
+                user2:true
             },
           }
            
