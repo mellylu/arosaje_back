@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -14,11 +15,11 @@ datasource db {
 model User {
   Id_Utilisateur   Int        @id @default(autoincrement())
   Civilite         String
-  Pseudo           String     
-  Prenom           String     
-  Nom              String     
+  Pseudo           String
+  Prenom           String
+  Nom              String
   Email            String     @unique
-  Mdp              String    
+  Mdp              String
   Latitude         Float
   Longitude        Float
   Ville            String
@@ -46,7 +47,7 @@ model Annonce {
  Conseils         Conseil[]
   EtatPlantes      String[]
   Annonce          User             @relation("AnnoncesRelation", fields: [AnnonceUser], references: [Id_Utilisateur])
-  AnnonceUser      Int              
+  AnnonceUser      Int
   AnnonceGardien   User?            @relation("GardiennageRelation", fields: [AnnonceUserGard], references: [Id_Utilisateur])//fin 6.2
   AnnonceUserGard  Int?         
 }

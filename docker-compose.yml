@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    image: node:16
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: /bin/sh -c "npm install && npx prisma generate && npm start"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+volumes:
+  postgres_data:
