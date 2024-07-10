@@ -148,7 +148,8 @@ exports.getId = async(req, res) => {
               include: {
               Messages: true,
               user1:true,
-                user2:true
+              user2:true,
+              annonce:true
             },
           }
            

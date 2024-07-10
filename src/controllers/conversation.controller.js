@@ -46,6 +46,8 @@ exports.getAll = async (req, res) => {
             },
             include: {
              Messages:true,
+             user1:true,
+             user2:true
             },
           })
           res.status(200).send({ content: conversation });
