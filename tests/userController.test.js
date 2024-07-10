@@ -4,7 +4,7 @@ const { PrismaClient } = require('@prisma/client');
 const { mockDeep, mockReset } = require('jest-mock-extended');
 const userController = require('../src/controllers/user.controller');
 const router = require('../src/routes/user.route');
-const verifyToken = require('../src/helpers/verifyToken'); // Assurez-vous que le chemin d'accès est correct
+const verifyToken = require('../src/helpers/verifyToken');
 const jwt = require('jsonwebtoken');
 
 jest.mock('@prisma/client', () => {
@@ -48,7 +48,7 @@ describe('user Controller', () => {
             Prenom: 'User 1',
       };
       jest.spyOn(jwt, 'verify').mockImplementation((token, secret, callback) => {
-        callback(null, { userId: 1 }); // Simule un décodage réussi du token
+        callback(null, { userId: 1 });
     });
 
       prisma.user.findUnique.mockResolvedValue(user);
@@ -94,19 +94,5 @@ describe('user Controller', () => {
       prisma.user.findUnique.mockResolvedValue(0);
     });
 
-    // it('should return 403 if token not found', async () => {
-    //     prisma.user.findUnique.mockResolvedValue(null);
-  
-    //     const response = await request(app)
-    //       .get('/api/v1/users/1')
-    //       .expect(403);
-
-    //     expect(response.body).toEqual({
-    //         auth: false,
-    //         token: null,
-    //         message:"Missing token"
-    //     });
-    //     prisma.user.findUnique.mockResolvedValue(null);
-    //   });
   });
 });
