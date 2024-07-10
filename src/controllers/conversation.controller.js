@@ -50,10 +50,13 @@ exports.getAll = async (req, res) => {
              user2:true
             },
           })
+          if (!conversation) {
+            return res.status(404).send({ error: 'Conversation not found' });
+          }
           res.status(200).send({ content: conversation });
         }
         catch(err){
-          res.status(500).send({ message: err });
+          res.status(500).send({ error: err });
             
         }
     finally {

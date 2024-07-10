@@ -155,6 +155,9 @@ exports.getId = async(req, res) => {
            
           },
         })
+        // if (!user) {
+        //   return res.status(404).send({ error: 'user not found' });
+        // }
         res.status(200).send({ content: user });
       }
       catch(err){
